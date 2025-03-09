@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import { FaCheck, FaTrash } from "react-icons/fa6";
 
 function Pomodoro() {
-    const [time, setTime] = useState(25 * 60); 
+    const [time, setTime] = useState(25 * 60);
     const [isRunning, setIsRunning] = useState(false);
     const [intervalId, setIntervalId] = useState(null);
+    const [tasks, setTasks] = useState([]);
+    const [taskInput, setTaskInput] = useState("");
 
     useEffect(() => {
         document.body.classList.add('bg-dark', 'text-light', 'text-center');
@@ -56,19 +59,34 @@ function Pomodoro() {
         window.location.href = '/login';
     };
 
+    const addTask = () => {
+        if (taskInput.trim() !== "") {
+            setTasks([...tasks, { text: taskInput, completed: false }]);
+            setTaskInput("");
+        }
+    };
+
+    const toggleTaskCompletion = (index) => {
+        const updatedTasks = [...tasks];
+        updatedTasks[index].completed = !updatedTasks[index].completed;
+        updatedTasks.sort((a, b) => a.completed - b.completed);
+        setTasks(updatedTasks);
+    };
+
+    const removeTask = (index) => {
+        setTasks(tasks.filter((_, i) => i !== index));
+    };
+
     return (
         <>
             <header className="bg-primary py-3">
                 <div className="container d-flex justify-content-between align-items-center">
-                    <Link className="navbar-brand" to="/pomodoro">
-                        <i className="fa-sharp fa-solid fa-clock ml-2 mx-2" style={{ color: '#74C0FC' }}></i>
-                        Pomodoro
-                    </Link>
+                    <h1 className="h3 mb-0">Controle seu Tempo</h1>
                     <nav>
                         <Link to="/gerenciamento_users">
-                            <button className="btn text-light fw-bold">Gerenciar usuários</button>
+                            <button className="btn btn-link text-light">Gerenciar usuários</button>
                         </Link>
-                        <button onClick={logout} className="btn fw-bold text-light">
+                        <button onClick={logout} className="btn btn-link text-light">
                             Sair
                         </button>
                     </nav>
@@ -76,28 +94,52 @@ function Pomodoro() {
             </header>
 
             <div className="container mt-5">
-               
                 <div className="d-flex justify-content-center mb-3">
-                    <button onClick={() => resetTimer(25 * 60)} className="btn btn-primary rounded-pill mx-1">
-                        Pomodoro
-                    </button>
-                    <button onClick={() => resetTimer(5 * 60)} className="btn btn-primary rounded-pill mx-1">
-                        Pausa Curta
-                    </button>
-                    <button onClick={() => resetTimer(15 * 60)} className="btn btn-primary rounded-pill mx-1">
-                        Pausa Longa
-                    </button>
+                    <button onClick={() => resetTimer(25 * 60)} className="btn btn-primary mx-1">Pomodoro</button>
+                    <button onClick={() => resetTimer(5 * 60)} className="btn btn-primary mx-1">Pausa Curta</button>
+                    <button onClick={() => resetTimer(15 * 60)} className="btn btn-primary mx-1">Pausa Longa</button>
                 </div>
 
-              
                 <div id="display-temporizador" className="display-1 font-weight-bold">
                     {formatTime(time)}
                 </div>
 
-                
-                <button onClick={startTimer} className="btn btn-primary btn-lg rounded-pill mt-3">
+                <button onClick={startTimer} className="btn btn-primary btn-lg mt-3">
                     {isRunning ? 'PAUSAR' : 'INICIAR'}
                 </button>
+
+                <div className='mt-5'>
+                    <h3>To-Do List</h3>
+                    <div className='input-group mb-3'>
+                        <input 
+                            type='text' 
+                            className='form-control' 
+                            placeholder='Adicionar tarefa...'
+                            value={taskInput}
+                            onChange={(e) => setTaskInput(e.target.value)}
+                        />
+                        <button onClick={addTask} className='btn btn-primary'>Adicionar</button>
+                    </div>
+                    <ul className='list-group'>
+                        {tasks.map((task, index) => (
+                            <li key={index} className={`list-group-item d-flex justify-content-between align-items-center ${task.completed ? 'bg-light text-muted' : ''}`} style={task.completed ? { textDecoration: 'line-through' } : {}}>
+                                <div>
+                                    <input 
+                                        type='checkbox' 
+                                        className='form-check-input me-2' 
+                                        checked={task.completed}
+                                        onChange={() => toggleTaskCompletion(index)}
+                                        disabled={task.completed}
+                                    />
+                                    {task.text}
+                                </div>
+                                <button className='btn btn-danger btn-sm' onClick={() => removeTask(index)}>
+                                    <FaTrash />
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </>
     );
