@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
-import { FaCheck, FaTrash } from "react-icons/fa6";
+import { FaCheck, FaTrash, FaPlus } from "react-icons/fa6";
 
 function Pomodoro() {
     const [time, setTime] = useState(25 * 60);
@@ -118,7 +118,9 @@ function Pomodoro() {
                             value={taskInput}
                             onChange={(e) => setTaskInput(e.target.value)}
                         />
-                        <button onClick={addTask} className='btn btn-primary'>Adicionar</button>
+                        <button onClick={addTask} className='btn btn-primary'>
+                            <FaPlus />
+                        </button>
                     </div>
                     <ul className='list-group'>
                         {tasks.map((task, index) => (
