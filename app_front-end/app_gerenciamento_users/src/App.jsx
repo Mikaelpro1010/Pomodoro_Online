@@ -5,15 +5,14 @@ import tecnicapomodoro from './assets/tecnicapomodoro.svg';
 import science from './assets/science.svg';
 import { Link } from 'react-router-dom';
 
-
 function App() {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+            <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#1565C0" }}>
                 <div className="container">
-                    <Link className="navbar-brand" to="/">
-                        <i className="fa-sharp fa-solid fa-clock ml-2 mx-2" style={{ color: '#74C0FC' }}></i>
+                    <Link className="navbar-brand text-white" to="/">
+                        <i className="fa-sharp fa-solid fa-clock ml-2 mx-2" style={{ color: '#BBDEFB' }}></i>
                         Pomodoro
                     </Link>
                     <button
@@ -30,17 +29,17 @@ function App() {
                     <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link className="nav-link fw-bold text-warning" to="/login">
+                                <Link className="nav-link fw-bold text-white" to="/login">
                                     Entrar
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link fw-bold text-warning" to="/register">
+                                <Link className="nav-link fw-bold text-white" to="/register">
                                     Cadastrar
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link fw-bold text-warning" to="/about">
+                                <Link className="nav-link fw-bold text-white" to="/about">
                                     Sobre
                                 </Link>
                             </li>
@@ -56,13 +55,15 @@ function App() {
                             <img src={timer} alt="Imagem Pomodoro" width="400px" />
                         </div>
                         <div className="col-md-6">
-                            <h1 className="text-primary mb-4">Otimize seu Tempo com Pomodoro!</h1>
+                            <h1 className="text-dark mb-4">Otimize seu Tempo com Pomodoro!</h1>
                             <p className="text-secondary mb-4">
                                 Está cansado de se distrair e perder o foco no trabalho ou nos estudos? Com a técnica Pomodoro, você pode organizar seu tempo e aumentar sua produtividade.
                                 Acesse nossa página e descubra como usar intervalos inteligentes para alcançar suas metas e transformar seu dia a dia. Concentre-se no que realmente importa e
                                 comece a ver resultados!
                             </p>
-                            <Link to="/register" className="btn rounded-pill btn-primary">Cadastre-se</Link>
+                            <Link to="/register" className="btn rounded-pill text-white" style={{ backgroundColor: "#1E88E5", padding: "12px 24px", fontSize: "18px" }}>
+                                Cadastre-se
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -72,7 +73,7 @@ function App() {
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-md-6">
-                            <h2 className="text-primary mb-4">O que é a técnica Pomodoro?</h2>
+                            <h2 className="text-dark mb-4">O que é a técnica Pomodoro?</h2>
                             <p className="text-secondary">
                                 A Técnica Pomodoro é um método de gerenciamento de tempo para aumentar sua produtividade.
                                 Um cronômetro é usado para dividir o tempo em intervalos chamados pomodoros e pausas.
@@ -97,7 +98,7 @@ function App() {
                             <img src={science} alt="Imagem Ciência Pomodoro" width="400px" />
                         </div>
                         <div className="col-md-6">
-                            <h2 className="text-primary mb-4">A ciência por trás da Técnica Pomodoro</h2>
+                            <h2 className="text-dark mb-4">A ciência por trás da Técnica Pomodoro</h2>
                             <p className="text-secondary mb-3">
                                 O <a href="https://www.cnnbrasil.com.br/saude/estudo-mostra-como-nao-ter-atencao-desviada-das-tarefas-e-manter-o-foco/"
                                     className="text-decoration-none text-primary" target="_blank"> intervalo de atenção </a>
@@ -107,17 +108,15 @@ function App() {
                     </div>
                 </div>
                 <a href="#top"
-                    className="btn btn-warning position-fixed"
+                    className="btn btn-primary position-fixed"
                     style={{ right: "15px", bottom: "15px" }}>
                     <i className="fas fa-arrow-up"></i>
                 </a>
             </section>
 
             <section className="mt-5">
-                <footer className="bg-primary pt-3 pb-3 position-relative">
-                    <div className="text-center">
-                        <p>&copy; 2024. Todos os direitos reservados.</p>
-                    </div>
+                <footer className="pt-3 pb-3 text-white text-center" style={{ backgroundColor: "#0D47A1" }}>
+                    <p>&copy; 2024. Todos os direitos reservados.</p>
                 </footer>
             </section>
 
@@ -126,3 +125,4 @@ function App() {
 }
 
 export default App;
+
