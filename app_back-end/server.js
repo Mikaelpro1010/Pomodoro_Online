@@ -1,4 +1,5 @@
 const {MongoClient, ObjectId} = require("mongodb");
+const ParseServer = require("parse-server").ParseServer;
 
 // 🔹 Carrega as variáveis de ambiente
 require("dotenv").config();
@@ -20,6 +21,17 @@ const express = require('express');
 
 const app = express();         
 const port = process.env.PORT || 3000; // 🔹 Agora usa a porta do Back4App automaticamente
+
+// Configuração do Parse Server
+const parseServer = new ParseServer({
+  databaseURI: process.env.DATABASE_URI,
+  appId: process.env.APP_ID,
+  masterKey: process.env.MASTER_KEY,
+  serverURL: process.env.SERVER_URL,
+});
+
+// Middleware do Parse Server
+app.use("/parse", parseServer.app);
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
