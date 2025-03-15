@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import welcome from '../../assets/welcome.svg';
 import api from '../../services/api';
 
 function Login() {
@@ -38,6 +37,7 @@ function Login() {
 
     return (
         <>
+            {/* Navbar Atualizada */}
             <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#1565C0" }}>
                 <div className="container">
                     <Link className="navbar-brand text-white" to="/">
@@ -77,42 +77,32 @@ function Login() {
                 </div>
             </nav>
 
+            {/* Modal de Login */}
             <section className="container vh-100 d-flex align-items-center justify-content-center">
-                <div className="card shadow-lg mx-auto" style={{ maxWidth: 900, borderRadius: "12px" }}>
-                    <div className="row no-gutters">
+                <div className="card shadow-lg p-4 rounded" style={{ maxWidth: "400px", width: "100%" }}>
+                    <h2 className="text-dark text-center">Bem-vindo de Volta!</h2>
+                    <p className="text-muted text-center">Entre na sua conta para continuar.</p>
 
-                        {/* Imagem à esquerda */}
-                        <div className="col-md-6 d-flex flex-column align-items-center justify-content-center p-4" style={{ backgroundColor: "#1E88E5", borderTopLeftRadius: "12px", borderBottomLeftRadius: "12px" }}>
-                            <img src={welcome} alt="Imagem de Login" style={{ maxWidth: '80%', height: 'auto' }} />
-                        </div>
+                    <form className="w-100">
+                        <input type="email" name="email" className="form-control mb-3" placeholder="E-mail" ref={inputEmail} 
+                            style={{ borderRadius: "8px", border: "1px solid #ddd", padding: "12px" }}
+                            onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
+                            onBlur={(e) => e.target.style.borderColor = "#ddd"} 
+                        />
 
-                        {/* Formulário de Login */}
-                        <div className="col-md-6 bg-white d-flex flex-column align-items-center justify-content-center p-5" style={{ borderTopRightRadius: "12px", borderBottomRightRadius: "12px" }}>
-                            <h2 className="text-dark">Bem-vindo de Volta!</h2>
-                            <p className="text-muted text-center">Entre na sua conta para continuar.</p>
+                        <input type="password" name="password" className="form-control mb-3" placeholder="Senha" ref={inputPassword} 
+                            style={{ borderRadius: "8px", border: "1px solid #ddd", padding: "12px" }}
+                            onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
+                            onBlur={(e) => e.target.style.borderColor = "#ddd"} 
+                        />
 
-                            <form className="w-100 px-4 text-center">
-                                <input type="email" name="email" className="form-control mb-3" placeholder="E-mail" ref={inputEmail} 
-                                    style={{ borderRadius: "8px", border: "1px solid #ddd", padding: "12px" }}
-                                    onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
-                                    onBlur={(e) => e.target.style.borderColor = "#ddd"} 
-                                />
-                                <input type="password" name="password" className="form-control mb-3" placeholder="Senha" ref={inputPassword} 
-                                    style={{ borderRadius: "8px", border: "1px solid #ddd", padding: "12px" }}
-                                    onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
-                                    onBlur={(e) => e.target.style.borderColor = "#ddd"} 
-                                />
-
-                                <button type="button" onClick={login} className="btn text-white rounded-pill w-50"
-                                    style={{ backgroundColor: "#1E88E5", padding: "12px", fontSize: "16px", transition: "0.3s" }}
-                                    onMouseOver={(e) => e.target.style.backgroundColor = "#0D47A1"}
-                                    onMouseOut={(e) => e.target.style.backgroundColor = "#1E88E5"}
-                                >
-                                    Entrar
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                        <button type="button" onClick={login} className="btn text-white rounded-pill w-100"
+                            style={{ backgroundColor: "#1E88E5", padding: "12px", fontSize: "16px", transition: "0.3s" }}
+                            onMouseOver={(e) => e.target.style.backgroundColor = "#0D47A1"}
+                            onMouseOut={(e) => e.target.style.backgroundColor = "#1E88E5"}>
+                            Entrar
+                        </button>
+                    </form>
                 </div>
             </section>
         </>
