@@ -4,10 +4,8 @@ import { Link } from 'react-router-dom';
 
 function About() {
     useEffect(() => {
-      
         document.body.classList.add('d-flex', 'flex-column', 'min-vh-100');
-        
-      
+
         return () => {
             document.body.classList.remove('d-flex', 'flex-column', 'min-vh-100');
         };
@@ -15,10 +13,11 @@ function About() {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+            {/* Navbar atualizada com a cor do projeto */}
+            <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#1565C0" }}>
                 <div className="container">
-                    <Link className="navbar-brand d-flex align-items-center" to="/">
-                        <i className="fa-sharp fa-solid fa-clock ml-2 mx-2" style={{color: "#74C0FC"}}></i>
+                    <Link className="navbar-brand d-flex align-items-center text-white" to="/">
+                        <i className="fa-sharp fa-solid fa-clock ml-2 mx-2" style={{ color: "#BBDEFB" }}></i>
                         <span className="ml-2">Pomodoro</span>
                     </Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,17 +26,17 @@ function About() {
                     <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link className="nav-link fw-bold text-warning" to="/login">
+                                <Link className="nav-link fw-bold text-white" to="/login">
                                     Entrar
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link fw-bold text-warning" to="/register">
+                                <Link className="nav-link fw-bold text-white" to="/register">
                                     Cadastrar
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link fw-bold text-warning" to="/about">
+                                <Link className="nav-link fw-bold text-white" to="/about">
                                     Sobre
                                 </Link>
                             </li>
@@ -46,6 +45,7 @@ function About() {
                 </div>
             </nav>
 
+            {/* Seção Sobre */}
             <section id="about" className="py-5 flex-grow-1 mt-5">
                 <div className="container bg-light p-4 rounded shadow">
                     <h2 className="text-primary mb-4">Sobre</h2>
@@ -64,7 +64,7 @@ function About() {
                 </div>
             </section>
         </>
-    )
+    );
 }
 
 export default About;
