@@ -1,16 +1,25 @@
 const {MongoClient, ObjectId} = require("mongodb");
-async function connect(){
-  if(global.db) return global.db;
-    const conn = await MongoClient.connect("mongodb+srv://mikael:mikaelan100@cluster0.gvgsp.mongodb.net/");
-  if(!conn) return new Error("Can't connect");
-    global.db = await conn.db("Desenvolvimento_Web");
+
+// 🔹 Carrega as variáveis de ambiente
+require("dotenv").config();
+
+async function connect() {
+  if (global.db) return global.db;
+  const conn = await MongoClient.connect(process.env.DATABASE_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  if (!conn) throw new Error("❌ Não foi possível conectar ao MongoDB");
+
+  global.db = conn.db("Desenvolvimento_Web"); // Nome do banco pode ser alterado conforme necessário
   return global.db;
 }
 
 const express = require('express');
 
 const app = express();         
-const port = 3000; //porta padrão
+const port = process.env.PORT || 3000; // 🔹 Agora usa a porta do Back4App automaticamente
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -74,7 +83,7 @@ router.post('/login', async function(req, res, next){
         return res.status(401).json({error: 'Senha inválida!'});
       }
       
-      const token = jwt.sign({ id: userAuth._id }, 'def5eb50dca1270a015c1ac2a8569fb69d0584d5fbd76f45e6f706517be1e63d', { expiresIn: '1h' });
+      const token = jwt.sign({ id: userAuth._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
       res.json({ token });
     }
     catch(ex){
