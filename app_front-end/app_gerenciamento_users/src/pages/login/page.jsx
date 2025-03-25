@@ -15,8 +15,10 @@ function Login() {
     const inputEmail = useRef();
     const inputPassword = useRef();
 
+    // Função de login
     async function login() {
         try {
+            // Requisição de login
             const response = await api.post('/login', {
                 email: inputEmail.current.value,
                 password: inputPassword.current.value
@@ -25,7 +27,12 @@ function Login() {
             const token = response.data.token;
 
             if (token) {
+                // Armazenar o token no localStorage
                 localStorage.setItem('token', token);
+
+                api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+                // Navega para a página de Pomodoro após login bem-sucedido
                 navigate('/pomodoro');
             } else {
                 alert('Credenciais inválidas!');
@@ -84,16 +91,16 @@ function Login() {
                     <p className="text-muted text-center">Entre na sua conta para continuar.</p>
 
                     <form className="w-100">
-                        <input type="email" name="email" className="form-control mb-3" placeholder="E-mail" ref={inputEmail} 
+                        <input type="email" name="email" className="form-control mb-3" placeholder="E-mail" ref={inputEmail}
                             style={{ borderRadius: "8px", border: "1px solid #ddd", padding: "12px" }}
                             onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
-                            onBlur={(e) => e.target.style.borderColor = "#ddd"} 
+                            onBlur={(e) => e.target.style.borderColor = "#ddd"}
                         />
 
-                        <input type="password" name="password" className="form-control mb-3" placeholder="Senha" ref={inputPassword} 
+                        <input type="password" name="password" className="form-control mb-3" placeholder="Senha" ref={inputPassword}
                             style={{ borderRadius: "8px", border: "1px solid #ddd", padding: "12px" }}
                             onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
-                            onBlur={(e) => e.target.style.borderColor = "#ddd"} 
+                            onBlur={(e) => e.target.style.borderColor = "#ddd"}
                         />
 
                         <button type="button" onClick={login} className="btn text-white rounded-pill w-100"
