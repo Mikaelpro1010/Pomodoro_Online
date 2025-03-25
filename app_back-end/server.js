@@ -58,30 +58,37 @@ router.post('/register', async function(req, res, next){
 
 // POST /login
 router.post('/login', async function(req, res, next){
-    try{
-      const { email, password } = req.body;
-      const db = await connect();
+  try {
+    const { email, password } = req.body;
 
-      const userAuth = await db.collection('user').findOne({email});
-
-      if(!userAuth) {
-        return res.status(404).json({error: 'Usuário não encontrado!'});
-      }
-
-      const passwordValid = await bcrypt.compare(password, userAuth.password);
-
-      if(!passwordValid){
-        return res.status(401).json({error: 'Senha inválida!'});
-      }
-      
-      const token = jwt.sign({ id: userAuth._id }, 'def5eb50dca1270a015c1ac2a8569fb69d0584d5fbd76f45e6f706517be1e63d', { expiresIn: '1h' });
-      res.json({ token });
+    // Verifique se o email e a senha foram fornecidos
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email e senha são obrigatórios!' });
     }
-    catch(ex){
-      console.log(ex);
-      res.status(400).json({erro: `${ex}`});
+
+    const db = await connect();
+    const userAuth = await db.collection('user').findOne({ email });
+
+    if (!userAuth) {
+      return res.status(404).json({ error: 'Usuário não encontrado!' });
     }
-})
+
+    // Verificando se a senha fornecida corresponde à senha armazenada no banco
+    const passwordValid = await bcrypt.compare(password, userAuth.password);
+
+    if (!passwordValid) {
+      return res.status(401).json({ error: 'Senha inválida!' });
+    }
+
+    // Criando o token JWT com expiração de 1 hora
+    const token = jwt.sign({ id: userAuth._id }, 'def5eb50dca1270a015c1ac2a8569fb69d0584d5fbd76f45e6f706517be1e63d', { expiresIn: '1h' });
+
+    return res.json({ token }); // Retorna o token JWT ao usuário
+  } catch (ex) {
+    console.error(ex);
+    return res.status(500).json({ error: 'Erro no servidor. Tente novamente mais tarde.' });
+  }
+});
 
 // PUT /user/{id}
 router.put('/user/:id', async function(req, res, next){
