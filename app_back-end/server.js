@@ -1,37 +1,16 @@
 const {MongoClient, ObjectId} = require("mongodb");
-const ParseServer = require("parse-server").ParseServer;
-
-// 🔹 Carrega as variáveis de ambiente
-require("dotenv").config();
-
-async function connect() {
-  if (global.db) return global.db;
-  const conn = await MongoClient.connect(process.env.DATABASE_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-  if (!conn) throw new Error("❌ Não foi possível conectar ao MongoDB");
-
-  global.db = conn.db("Desenvolvimento_Web"); // Nome do banco pode ser alterado conforme necessário
+async function connect(){
+  if(global.db) return global.db;
+    const conn = await MongoClient.connect("mongodb+srv://mikael:mikaelan100@cluster0.gvgsp.mongodb.net/");
+  if(!conn) return new Error("Can't connect");
+    global.db = await conn.db("Desenvolvimento_Web");
   return global.db;
 }
 
 const express = require('express');
 
 const app = express();         
-const port = process.env.PORT || 3000; // 🔹 Agora usa a porta do Back4App automaticamente
-
-// Configuração do Parse Server
-const parseServer = new ParseServer({
-  databaseURI: process.env.DATABASE_URI,
-  appId: process.env.APP_ID,
-  masterKey: process.env.MASTER_KEY,
-  serverURL: process.env.SERVER_URL,
-});
-
-// Middleware do Parse Server
-app.use("/parse", parseServer.app);
+const port = 3333; //porta padrão
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -95,7 +74,7 @@ router.post('/login', async function(req, res, next){
         return res.status(401).json({error: 'Senha inválida!'});
       }
       
-      const token = jwt.sign({ id: userAuth._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ id: userAuth._id }, 'def5eb50dca1270a015c1ac2a8569fb69d0584d5fbd76f45e6f706517be1e63d', { expiresIn: '1h' });
       res.json({ token });
     }
     catch(ex){
@@ -128,6 +107,82 @@ router.delete('/user/:id', async function(req, res, next){
     res.status(400).json({erro: `${ex}`});
   }
 })
+
+//Rota do To do List
+router.post('/tasks', async function(req, res, next) {
+  try {
+    const { description } = req.body;
+    const db = await connect();
+
+    // Pega o ID do usuário do token JWT
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, 'def5eb50dca1270a015c1ac2a8569fb69d0584d5fbd76f45e6f706517be1e63d');
+    const userId = decoded.id;
+
+    const task = {
+      user_id: new ObjectId(userId),
+      description,
+      completed: false,
+      created_at: new Date()
+    };
+
+    const result = await db.collection("tasks").insertOne(task);
+    res.status(201).json(result);
+  }
+  catch(ex) {
+    console.log(ex);
+    res.status(400).json({ erro: `${ex}` });
+  }
+});
+
+router.get('/tasks', async function(req, res, next) {
+  try {
+    const db = await connect();
+
+    // Pega o ID do usuário do token JWT
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, 'def5eb50dca1270a015c1ac2a8569fb69d0584d5fbd76f45e6f706517be1e63d');
+    const userId = decoded.id;
+
+    const tasks = await db.collection("tasks")
+      .find({ user_id: new ObjectId(userId) })
+      .toArray();
+
+    res.json(tasks);
+  }
+  catch(ex) {
+    console.log(ex);
+    res.status(400).json({ erro: `${ex}` });
+  }
+});
+
+router.delete('/tasks/:id', async function(req, res, next) {
+  try {
+    const db = await connect();
+
+    // Verifica se a tarefa pertence ao usuário
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, 'def5eb50dca1270a015c1ac2a8569fb69d0584d5fbd76f45e6f706517be1e63d');
+    const userId = decoded.id;
+
+    const taskId = new ObjectId(req.params.id);
+
+    const result = await db.collection("tasks").deleteOne(
+      { _id: taskId, user_id: new ObjectId(userId) }
+    );
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: "Tarefa não encontrada ou não pertence ao usuário." });
+    }
+
+    res.json(result);
+  }
+  catch(ex) {
+    console.log(ex);
+    res.status(400).json({ erro: `${ex}` });
+  }
+});
+
 
 app.use('/', router);
 
