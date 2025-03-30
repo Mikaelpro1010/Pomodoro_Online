@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaCheck, FaTrash, FaPlus } from "react-icons/fa6";
 
 function Pomodoro() {
@@ -9,6 +10,8 @@ function Pomodoro() {
     const [intervalId, setIntervalId] = useState(null);
     const [tasks, setTasks] = useState([]);
     const [taskInput, setTaskInput] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         document.body.classList.add('bg-light', 'text-secondary', 'text-center');
@@ -56,7 +59,7 @@ function Pomodoro() {
 
     const logout = () => {
         localStorage.removeItem('token');
-        window.location.href = '/login';
+        navigate('/login');
     };
 
     const addTask = () => {
