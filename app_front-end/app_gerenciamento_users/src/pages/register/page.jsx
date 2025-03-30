@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import api from '../../services/api';
 
@@ -17,6 +17,8 @@ function Register() {
     const inputEmail = useRef();
     const inputPassword = useRef();
 
+    const navigate = useNavigate();
+
     async function createUsers() {
         try {
             await api.post('/register', {
@@ -27,6 +29,11 @@ function Register() {
 
             clearInputs();
             setSuccessMessage("Cadastro realizado com sucesso!");
+
+            // Aguarda 2 segundos antes de redirecionar
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
         } catch (error) {
             setSuccessMessage("Erro ao realizar o cadastro!");
         }
@@ -86,12 +93,12 @@ function Register() {
                     <div className="row no-gutters">
 
                         {/* Lado esquerdo - Mensagem de boas-vindas */}
-                        <div className="col-md-6 text-white d-flex flex-column align-items-center justify-content-center p-5" 
+                        <div className="col-md-6 text-white d-flex flex-column align-items-center justify-content-center p-5"
                             style={{ backgroundColor: "#1E88E5", borderTopLeftRadius: "12px", borderBottomLeftRadius: "12px" }}>
                             <h2 className="text-white">Bem-vindo de Volta!</h2>
                             <p className="text-center">
-                                A melhor forma de controlar e monitorar seu tempo. 
-                                Te ajudamos a aumentar sua produtividade e atenção! 
+                                A melhor forma de controlar e monitorar seu tempo.
+                                Te ajudamos a aumentar sua produtividade e atenção!
                                 Para se manter conectado conosco, faça login com suas informações pessoais.
                             </p>
                             <Link to="/login">
