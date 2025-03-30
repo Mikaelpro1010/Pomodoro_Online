@@ -3,6 +3,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import timer from './assets/timer.svg';
 import tecnicapomodoro from './assets/tecnicapomodoro.svg';
 import science from './assets/science.svg';
+import './App.css';
 import { Link } from 'react-router-dom';
 
 function App() {
@@ -48,7 +49,7 @@ function App() {
                 </div>
             </nav>
 
-            <section className="d-flex align-items-center mt-5">
+            <section className="d-flex align-items-center mt-5 animate-left">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-md-6 d-flex justify-content-center">
@@ -69,7 +70,7 @@ function App() {
                 </div>
             </section>
 
-            <section className="py-5">
+            <section className="py-5 animate-right">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-md-6">
@@ -91,7 +92,7 @@ function App() {
             </section>
 
             
-            <section className="bg-light mt-5">
+            <section className="bg-light mt-5 animate-left">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-md-6 d-flex justify-content-center">
