@@ -91,29 +91,29 @@ router.post('/login', async function(req, res, next){
 });
 
 // PUT /user/{id}
-router.put('/user/:id', async function(req, res, next){
-    try{
-      const user = req.body;
-      const db = await connect();
-      res.json(await db.collection("user").updateOne({_id: new ObjectId(req.params.id)}, {$set: user}));
-    }
-    catch(ex){
-      console.log(ex);
-      res.status(400).json({erro: `${ex}`});
-    }
-})
+// router.put('/user/:id', async function(req, res, next){
+//     try{
+//       const user = req.body;
+//       const db = await connect();
+//       res.json(await db.collection("user").updateOne({_id: new ObjectId(req.params.id)}, {$set: user}));
+//     }
+//     catch(ex){
+//       console.log(ex);
+//       res.status(400).json({erro: `${ex}`});
+//     }
+// })
 
 // DELETE /user/{id}
-router.delete('/user/:id', async function(req, res, next){
-  try{
-    const db = await connect();
-    res.json(await db.collection("user").deleteOne({_id: new ObjectId(req.params.id)}));
-  }
-  catch(ex){
-    console.log(ex);
-    res.status(400).json({erro: `${ex}`});
-  }
-})
+// router.delete('/user/:id', async function(req, res, next){
+//   try{
+//     const db = await connect();
+//     res.json(await db.collection("user").deleteOne({_id: new ObjectId(req.params.id)}));
+//   }
+//   catch(ex){
+//     console.log(ex);
+//     res.status(400).json({erro: `${ex}`});
+//   }
+// })
 
 //Rota do To do List
 router.post('/tasks', async function(req, res, next) {
