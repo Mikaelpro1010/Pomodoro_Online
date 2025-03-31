@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import './Pomodoro.css';
+import axios from 'axios';
 import { FaTrash, FaPlus } from "react-icons/fa6";
 
 function Pomodoro() {
@@ -18,6 +19,24 @@ function Pomodoro() {
         return () => {
             document.body.classList.remove('bg-light', 'text-secondary', 'text-center');
         };
+    }, []);
+
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('https://computacao-em-nuvem.onrender.com/tasks', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setTasks(response.data); // Atualiza com as tarefas do backend
+            } catch (error) {
+                console.error("Erro ao buscar tarefas:", error.response?.data || error.message);
+            }
+        };
+
+        fetchTasks();
     }, []);
 
     const formatTime = (seconds) => {
@@ -62,11 +81,37 @@ function Pomodoro() {
         navigate('/login');
     };
 
-    const addTask = () => {
+    const addTask = async () => {
         if (taskInput.trim() !== "") {
-            setTasks([{ text: taskInput, completed: false, deleted: false }, ...tasks]); // Adiciona a tarefa no topo
-            setTaskInput("");
-        }
+            try {
+                const token = localStorage.getItem('token');
+
+                const response = await axios.post(
+                    'https://computacao-em-nuvem.onrender.com/tasks',
+                    {
+                        description: taskInput,
+                        completed: false,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                // Adiciona a nova tarefa à lista
+                setTasks([
+                    {
+                        _id: response.data.insertedId,
+                        description: taskInput,
+                        completed: false,
+                    }
+                ]);
+                setTaskInput("");
+            } catch (error) {
+                console.error("Erro ao adicionar tarefa:", error.response?.data || error.message);
+            }
+        };
     };
 
     const toggleTaskCompletion = (index) => {
@@ -79,17 +124,28 @@ function Pomodoro() {
         setTasks(updatedTasks);
     };
 
-    const removeTask = (index) => {
-        const updatedTasks = [...tasks];
-        updatedTasks.splice(index, 1); // Remove a tarefa de forma definitiva
-        setTasks(updatedTasks);
+    const removeTask = async (taskId) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            await axios.delete(`https://computacao-em-nuvem.onrender.com/tasks/${taskId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            // Remove do estado local após sucesso no back-end
+            setTasks(tasks.filter(task => task._id !== taskId));
+        } catch (error) {
+            console.error("Erro ao deletar tarefa:", error.response?.data || error.message);
+        }
     };
 
     return (
         <>
             <header className="bg-primary py-3">
                 <div className="container d-flex justify-content-between align-items-center">
-                <h1 className="h3 mb-0" style={{ color: "#ffffff" }}>Controle seu Tempo</h1>
+                    <h1 className="h3 mb-0" style={{ color: "#ffffff" }}>Controle seu Tempo</h1>
                     <nav>
                         <button onClick={logout} className="btn btn-link text-light" style={{ textDecoration: "none" }}>
                             Sair
@@ -111,7 +167,7 @@ function Pomodoro() {
                         {formatTime(time)}
                     </div>
 
-                    <button onClick={startTimer} style={{ borderRadius: '50px', width: '100px'}} className="btn btn-primary mt-3 zoom-hover">
+                    <button onClick={startTimer} style={{ borderRadius: '50px', width: '100px' }} className="btn btn-primary mt-3 zoom-hover">
                         {isRunning ? 'PAUSAR' : 'INICIAR'}
                     </button>
                 </div>
@@ -120,31 +176,31 @@ function Pomodoro() {
                 <div className="todo-section" style={{ flex: 1, maxWidth: '400px', paddingLeft: '20px' }}>
                     <h3>To-Do List</h3>
                     <div className='input-group mb-3'>
-                        <input 
-                            type='text' 
-                            className='form-control' 
+                        <input
+                            type='text'
+                            className='form-control'
                             placeholder='Adicionar tarefa...'
                             value={taskInput}
                             onChange={(e) => setTaskInput(e.target.value)}
-                            style={{ 
-                                height: '40px', 
-                                fontSize: '16px', 
-                                padding: '10px', 
-                                borderRadius: '8px', 
-                                width: 'calc(100% - 40px)' 
+                            style={{
+                                height: '40px',
+                                fontSize: '16px',
+                                padding: '10px',
+                                borderRadius: '8px',
+                                width: 'calc(100% - 40px)'
                             }}
                         />
-                        <button onClick={addTask} className='btn btn-primary zoom-hover' 
+                        <button type="submit" onClick={addTask} className='btn btn-primary zoom-hover'
                             style={{
                                 marginLeft: '2px',
-                                height: '40px', 
-                                padding: '10px', 
+                                height: '40px',
+                                padding: '10px',
                                 borderRadius: '8px', // Deixando as bordas arredondadas
                                 border: '1px solid #007bff', // Cor de borda para combinar com o input
                                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                                display: 'flex', 
-                                alignItems: 'center', 
-                          
+                                display: 'flex',
+                                alignItems: 'center',
+
                             }}
                         >
                             <FaPlus />
@@ -152,7 +208,7 @@ function Pomodoro() {
                     </div>
                     <ul className='list-group' style={{ listStyleType: 'none', padding: 0, height: '400px', overflowY: 'auto' }}>
                         {tasks.map((task, index) => (
-                            <li key={index} 
+                            <li key={index}
                                 className={`list-group-item d-flex justify-content-between align-items-center ${task.completed ? 'bg-light text-muted' : ''}`}
                                 style={{
                                     borderRadius: '10px',
@@ -163,15 +219,15 @@ function Pomodoro() {
                                     textDecoration: task.completed ? 'line-through' : 'none' // Adiciona a linha cortando o texto
                                 }}>
                                 <div>
-                                    <input 
-                                        type='checkbox' 
-                                        className='form-check-input me-2' 
+                                    <input
+                                        type='checkbox'
+                                        className='form-check-input me-2'
                                         checked={task.completed}
                                         onChange={() => toggleTaskCompletion(index)}
                                     />
-                                    {task.text}
+                                    {task.description}
                                 </div>
-                                <button className='btn btn-danger btn-sm zoom-hover' onClick={() => removeTask(index)}>
+                                <button className='btn btn-danger btn-sm zoom-hover' onClick={() => removeTask(task._id)}>
                                     <FaTrash />
                                 </button>
                             </li>

@@ -163,6 +163,19 @@ router.get('/tasks', async function(req, res, next) {
   }
 });
 
+router.put('/tasks/:id', async function(req, res, next){
+    try{
+      const tasks = req.body;
+      const db = await connect();
+      res.json(await db.collection("tasks").updateOne({_id: new ObjectId(req.params.id)}, {$set: tasks}));
+    }
+    catch(ex){
+      console.log(ex);
+      res.status(400).json({erro: `${ex}`});
+    }
+})
+
+
 router.delete('/tasks/:id', async function(req, res, next) {
   try {
     const db = await connect();
