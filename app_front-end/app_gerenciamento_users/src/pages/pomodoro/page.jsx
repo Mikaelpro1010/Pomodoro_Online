@@ -11,6 +11,8 @@ function Pomodoro() {
     const [intervalId, setIntervalId] = useState(null);
     const [tasks, setTasks] = useState([]);
     const [taskInput, setTaskInput] = useState("");
+    const [editingTaskId, setEditingTaskId] = useState(null);
+    const [editingText, setEditingText] = useState("");
 
     const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ function Pomodoro() {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                setTasks(response.data); // Atualiza com as tarefas do backend
+                setTasks(response.data);
             } catch (error) {
                 console.error("Erro ao buscar tarefas:", error.response?.data || error.message);
             }
@@ -99,8 +101,8 @@ function Pomodoro() {
                     }
                 );
 
-                // Adiciona a nova tarefa à lista
                 setTasks([
+                    ...tasks,
                     {
                         _id: response.data.insertedId,
                         description: taskInput,
@@ -117,10 +119,7 @@ function Pomodoro() {
     const toggleTaskCompletion = (index) => {
         const updatedTasks = [...tasks];
         updatedTasks[index].completed = !updatedTasks[index].completed;
-
-        // Reorganiza as tarefas para que as não concluídas venham antes das concluídas
         updatedTasks.sort((a, b) => a.completed - b.completed);
-
         setTasks(updatedTasks);
     };
 
@@ -134,10 +133,47 @@ function Pomodoro() {
                 }
             });
 
-            // Remove do estado local após sucesso no back-end
             setTasks(tasks.filter(task => task._id !== taskId));
         } catch (error) {
             console.error("Erro ao deletar tarefa:", error.response?.data || error.message);
+        }
+    };
+
+    const startEditing = (task) => {
+        setEditingTaskId(task._id);
+        setEditingText(task.description);
+    };
+
+    const cancelEditing = () => {
+        setEditingTaskId(null);
+        setEditingText("");
+    };
+
+    const saveTask = async (taskId) => {
+        if (editingText.trim() === "") return;
+
+        try {
+            const token = localStorage.getItem('token');
+
+            await axios.put(
+                `https://computacao-em-nuvem.onrender.com/tasks/${taskId}`,
+                {
+                    description: editingText,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            setTasks(tasks.map(task =>
+                task._id === taskId ? { ...task, description: editingText } : task
+            ));
+            setEditingTaskId(null);
+            setEditingText("");
+        } catch (error) {
+            console.error("Erro ao atualizar tarefa:", error.response?.data || error.message);
         }
     };
 
@@ -195,12 +231,11 @@ function Pomodoro() {
                                 marginLeft: '2px',
                                 height: '40px',
                                 padding: '10px',
-                                borderRadius: '8px', // Deixando as bordas arredondadas
-                                border: '1px solid #007bff', // Cor de borda para combinar com o input
+                                borderRadius: '8px',
+                                border: '1px solid #007bff',
                                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                                 display: 'flex',
                                 alignItems: 'center',
-
                             }}
                         >
                             <FaPlus />
@@ -212,11 +247,11 @@ function Pomodoro() {
                                 className={`list-group-item d-flex justify-content-between align-items-center ${task.completed ? 'bg-light text-muted' : ''}`}
                                 style={{
                                     borderRadius: '10px',
-                                    backgroundColor: task.completed ? '#e9ecef' : '#f1f1f1', // Trocando a cor amarelada por tons mais suaves
+                                    backgroundColor: task.completed ? '#e9ecef' : '#f1f1f1',
                                     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                                     marginBottom: '5px',
                                     padding: '10px 15px',
-                                    textDecoration: task.completed ? 'line-through' : 'none' // Adiciona a linha cortando o texto
+                                    textDecoration: task.completed ? 'line-through' : 'none'
                                 }}>
                                 <div>
                                     <input
@@ -225,11 +260,60 @@ function Pomodoro() {
                                         checked={task.completed}
                                         onChange={() => toggleTaskCompletion(index)}
                                     />
-                                    {task.description}
+
+                                    {editingTaskId === task._id ? (
+                                        <input
+                                            type="text"
+                                            value={editingText}
+                                            onChange={(e) => setEditingText(e.target.value)}
+                                            className="form-control d-inline-block"
+                                            style={{ width: '150px' }}
+                                        />
+                                    ) : (
+                                        task.description
+                                    )}
                                 </div>
-                                <button className='btn btn-danger btn-sm zoom-hover' onClick={() => removeTask(task._id)}>
-                                    <FaTrash />
-                                </button>
+                                <div>
+                                    {editingTaskId === task._id ? (
+                                        <>
+                                            <button
+                                                className='btn btn-success btn-sm me-1 zoom-hover'
+                                                onClick={() => saveTask(task._id)}
+                                            >
+                                                Salvar
+                                            </button>
+                                            <button
+                                                className='btn btn-secondary btn-sm zoom-hover'
+                                                onClick={cancelEditing}
+                                            >
+                                                Cancelar
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button
+                                                className='btn btn-warning btn-sm me-1 zoom-hover'
+                                                onClick={() => startEditing(task)}
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 512 512"
+                                                    width="16"
+                                                    height="16"
+                                                    fill="currentColor"
+                                                >
+                                                    <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7-14.3 32-32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z" />
+                                                </svg>
+                                            </button>
+                                            <button
+                                                className='btn btn-danger btn-sm zoom-hover'
+                                                onClick={() => removeTask(task._id)}
+                                            >
+                                                <FaTrash />
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
                             </li>
                         ))}
                     </ul>
