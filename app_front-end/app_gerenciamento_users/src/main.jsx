@@ -6,7 +6,6 @@ import Login from './pages/login/page.jsx'
 import Register from './pages/register/page.jsx'
 import About from './pages/about/page.jsx'
 import Pomodoro from './pages/pomodoro/page.jsx'
-import GerenciamentoUsers from './pages/gerenciamentoUsers/page.jsx'
 import ProtectedRoute from './ProtectedRoute.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -18,7 +17,6 @@ createRoot(document.getElementById('root')).render(
         <Route path="/register" element={<Register />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/pomodoro" element={<ProtectedRoute><Pomodoro /></ProtectedRoute>}></Route>
-        <Route path="/gerenciamento_users" element={<ProtectedRoute><GerenciamentoUsers /></ProtectedRoute>}></Route>
       </Routes>
     </BrowserRouter>
   </StrictMode>,
