@@ -50,6 +50,10 @@ function Register() {
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#1565C0" }}>
                 <div className="container">
+                    <header>
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6916450801994185"
+                            crossorigin="anonymous"></script>
+                    </header>
                     <Link className="navbar-brand text-white" to="/">
                         <i className="fa-sharp fa-solid fa-clock ml-2 mx-2" style={{ color: '#BBDEFB' }}></i>
                         Pomodoro

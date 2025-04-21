@@ -16,6 +16,10 @@ function About() {
             {/* Navbar atualizada com a cor do projeto */}
             <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#1565C0" }}>
                 <div className="container">
+                    <header>
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6916450801994185"
+                            crossorigin="anonymous"></script>
+                    </header>
                     <Link className="navbar-brand d-flex align-items-center text-white" to="/">
                         <i className="fa-sharp fa-solid fa-clock ml-2 mx-2" style={{ color: "#BBDEFB" }}></i>
                         <span className="ml-2">Pomodoro</span>
@@ -59,7 +63,7 @@ function About() {
                         <li>Vitória de Oliveira Almeida - 2325332</li>
                     </ul>
                     <p className="text-secondary">
-                    O objetivo era criar uma aplicação que permitisse aos usuários controlar seu tempo, ajudando-os a organizar e realizar as atividades do dia a dia com mais eficiência e foco. Além disso, essa aplicação possibilita o gerenciamento de usuários autenticados no sistema. Levando em consideração que essa aplicação fosse desenvolvida diretamente na nuvem, tanto o front-end quanto o back-end foram implementados em ambiente cloud. Além disso, o código-fonte foi hospedado em um repositório remoto na nuvem.
+                        O objetivo era criar uma aplicação que permitisse aos usuários controlar seu tempo, ajudando-os a organizar e realizar as atividades do dia a dia com mais eficiência e foco. Além disso, essa aplicação possibilita o gerenciamento de usuários autenticados no sistema. Levando em consideração que essa aplicação fosse desenvolvida diretamente na nuvem, tanto o front-end quanto o back-end foram implementados em ambiente cloud. Além disso, o código-fonte foi hospedado em um repositório remoto na nuvem.
                     </p>
                 </div>
             </section>
