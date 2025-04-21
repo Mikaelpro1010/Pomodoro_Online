@@ -179,7 +179,7 @@ function Pomodoro() {
 
     return (
         <>
-            <header className="bg-primary py-3">
+            <head className="bg-primary py-3">
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6916450801994185"
                     crossorigin="anonymous"></script>
                 <div className="container d-flex justify-content-between align-items-center">
@@ -190,7 +190,7 @@ function Pomodoro() {
                         </button>
                     </nav>
                 </div>
-            </header>
+            </head>
 
             <div className="container mt-5 d-flex justify-content-between">
                 {/* Pomodoro Section */}
