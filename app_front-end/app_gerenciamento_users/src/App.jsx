@@ -4,6 +4,7 @@ import timer from './assets/timer.svg';
 import tecnicapomodoro from './assets/tecnicapomodoro.svg';
 import science from './assets/science.svg';
 import './App.css';
+import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 function App() {
@@ -12,10 +13,11 @@ function App() {
         <>
             <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#1565C0" }}>
                 <div className="container">
-                    <header>
+                    <Helmet>
                         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6916450801994185"
                             crossorigin="anonymous"></script>
-                    </header>
+
+                    </Helmet>
                     <Link className="navbar-brand text-white" to="/">
                         <i className="fa-sharp fa-solid fa-clock ml-2 mx-2" style={{ color: '#BBDEFB' }}></i>
                         Pomodoro

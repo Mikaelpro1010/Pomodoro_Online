@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import './Pomodoro.css';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import { FaTrash, FaPlus } from "react-icons/fa6";
 
 function Pomodoro() {
@@ -179,10 +180,12 @@ function Pomodoro() {
 
     return (
         <>
-            <head>
+            <Helmet>
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6916450801994185"
                     crossorigin="anonymous"></script>
-            </head>
+
+            </Helmet>
+
             <header className="bg-primary py-3">
                 <div className="container d-flex justify-content-between align-items-center">
                     <h1 className="h3 mb-0" style={{ color: "#ffffff" }}>Controle seu Tempo</h1>

@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Helmet from 'react-helmet';
 import api from '../../services/api';
 
 function Register() {
@@ -50,10 +51,11 @@ function Register() {
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#1565C0" }}>
                 <div className="container">
-                    <head>
+                    <Helmet>
                         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6916450801994185"
                             crossorigin="anonymous"></script>
-                    </head>
+
+                    </Helmet>
                     <Link className="navbar-brand text-white" to="/">
                         <i className="fa-sharp fa-solid fa-clock ml-2 mx-2" style={{ color: '#BBDEFB' }}></i>
                         Pomodoro
