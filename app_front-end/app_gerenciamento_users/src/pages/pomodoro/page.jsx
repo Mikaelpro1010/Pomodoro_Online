@@ -179,9 +179,11 @@ function Pomodoro() {
 
     return (
         <>
-            <head className="bg-primary py-3">
+            <head>
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6916450801994185"
                     crossorigin="anonymous"></script>
+            </head>
+            <header className="bg-primary py-3">
                 <div className="container d-flex justify-content-between align-items-center">
                     <h1 className="h3 mb-0" style={{ color: "#ffffff" }}>Controle seu Tempo</h1>
                     <nav>
@@ -190,7 +192,7 @@ function Pomodoro() {
                         </button>
                     </nav>
                 </div>
-            </head>
+            </header>
 
             <div className="container mt-5 d-flex justify-content-between">
                 {/* Pomodoro Section */}
