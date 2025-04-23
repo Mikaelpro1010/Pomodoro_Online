@@ -28,7 +28,7 @@ function Pomodoro() {
         const fetchTasks = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('https://computacao-em-nuvem.onrender.com/tasks', {
+                const response = await axios.get('https://pomodoro-online.onrender.com/tasks', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -90,7 +90,7 @@ function Pomodoro() {
                 const token = localStorage.getItem('token');
 
                 const response = await axios.post(
-                    'https://computacao-em-nuvem.onrender.com/tasks',
+                    'https://pomodoro-online.onrender.com/tasks',
                     {
                         description: taskInput,
                         completed: false,
@@ -128,7 +128,7 @@ function Pomodoro() {
         try {
             const token = localStorage.getItem('token');
 
-            await axios.delete(`https://computacao-em-nuvem.onrender.com/tasks/${taskId}`, {
+            await axios.delete(`https://pomodoro-online.onrender.com/tasks/${taskId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -157,7 +157,7 @@ function Pomodoro() {
             const token = localStorage.getItem('token');
 
             await axios.put(
-                `https://computacao-em-nuvem.onrender.com/tasks/${taskId}`,
+                `https://pomodoro-online.onrender.com/tasks/${taskId}`,
                 {
                     description: editingText,
                 },
