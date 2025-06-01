@@ -134,21 +134,21 @@ function Register() {
                             {/* Formulário */}
                             <form className="w-100 px-4 text-center">
                                 <input type="text" name="name" className=" mb-3" placeholder="Nome" ref={inputName}
-                                    style={{ borderRadius: "8px", border: "2px solid", padding: "12px" }}
-{/*                                     onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
-                                    onBlur={(e) => e.target.style.borderColor = "#ddd"}  */}
+                                    style={{ borderRadius: "8px", border: "2px solid #ddd", padding: "12px" }}
+                                    onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
+                                    onBlur={(e) => e.target.style.borderColor = "#ddd"} 
                                 />
 
                                 <input type="email" name="email" className=" mb-3" placeholder="E-mail" ref={inputEmail}
-                                    style={{ borderRadius: "8px", border: "2px solid", padding: "12px" }}
-{/*                                     onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
-                                    onBlur={(e) => e.target.style.borderColor = "#ddd"}  */}
+                                    style={{ borderRadius: "8px", border: "2px solid #ddd", padding: "12px" }}
+                                    onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
+                                    onBlur={(e) => e.target.style.borderColor = "#ddd"} 
                                 />
 
                                 <input type="password" name="password" className=" mb-3" placeholder="Senha" ref={inputPassword}
-                                    style={{ borderRadius: "8px", border: "2px solid", padding: "12px" }}
-{/*                                     onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
-                                    onBlur={(e) => e.target.style.borderColor = "#ddd"}  */}
+                                    style={{ borderRadius: "8px", border: "2px solid #ddd", padding: "12px" }}
+                                    onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
+                                    onBlur={(e) => e.target.style.borderColor = "#ddd"} 
                                 />
 
                                 <button type="button" onClick={createUsers} className="btn text-white rounded-pill w-50"
