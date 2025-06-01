@@ -119,7 +119,7 @@ function Register() {
 
                         {/* Lado direito - Formulário */}
                         <div className="col-md-6 bg-white d-flex flex-column align-items-center justify-content-center p-5"
-                            style={{ borderTopRightRadius: "12px", borderBottomRightRadius: "12px" }}>
+                            style={{ borderTopRightRadius: "12px", borderBottomRightRadius: "12px", border: "2px solid #1E88E5", padding: "20px" }}>
                             <h2 className="text-dark">Criar Conta</h2>
                             <p className="text-muted text-center">ou use seu e-mail para cadastro:</p>
 
