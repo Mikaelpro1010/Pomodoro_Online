@@ -54,7 +54,7 @@ function About() {
                 <div className="container bg-light p-4 rounded shadow">
                     <h2 className="text-primary mb-4">Sobre</h2>
                     <p className="text-secondary">
-                        Este trabalho foi desenvolvido para a disciplina de <strong>Desenvolvimento de Software em Nuvem </strong>
+                        Este trabalho foi desenvolvido para a disciplina de <strong>Projeto Aplicado de Desenvolvimento de Software - Etapa 2 </strong>
                         da <strong> Universidade de Fortaleza</strong>, pelos membros da equipe:
                     </p>
                     <ul className="list-unstyled text-secondary">
