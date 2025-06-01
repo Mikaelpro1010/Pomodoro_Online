@@ -133,19 +133,19 @@ function Register() {
 
                             {/* Formulário */}
                             <form className="w-100 px-4 text-center">
-                                <input type="text" name="name" className="form-control mb-3" placeholder="Nome" ref={inputName}
+                                <input type="text" name="name" className=" mb-3" placeholder="Nome" ref={inputName}
                                     style={{ borderRadius: "8px", border: "1px solid #ddd", border: "2px solid", padding: "12px" }}
 {/*                                     onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
                                     onBlur={(e) => e.target.style.borderColor = "#ddd"}  */}
                                 />
 
-                                <input type="email" name="email" className="form-control mb-3" placeholder="E-mail" ref={inputEmail}
+                                <input type="email" name="email" className=" mb-3" placeholder="E-mail" ref={inputEmail}
                                     style={{ borderRadius: "8px", border: "1px solid #ddd", border: "2px solid", padding: "12px" }}
 {/*                                     onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
                                     onBlur={(e) => e.target.style.borderColor = "#ddd"}  */}
                                 />
 
-                                <input type="password" name="password" className="form-control mb-3" placeholder="Senha" ref={inputPassword}
+                                <input type="password" name="password" className=" mb-3" placeholder="Senha" ref={inputPassword}
                                     style={{ borderRadius: "8px", border: "1px solid #ddd", border: "2px solid", padding: "12px" }}
 {/*                                     onFocus={(e) => e.target.style.borderColor = "#1E88E5"}
                                     onBlur={(e) => e.target.style.borderColor = "#ddd"}  */}
