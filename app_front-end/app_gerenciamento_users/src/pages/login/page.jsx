@@ -92,7 +92,7 @@ function Login() {
 
             {/* Modal de Login */}
             <section className="container vh-100 d-flex align-items-center justify-content-center">
-                <div className="card shadow-lg p-4 rounded" style={{ maxWidth: "400px", width: "100%" }}>
+                <div className="card shadow-lg p-4 rounded" style={{ maxWidth: "400px", width: "100%", border: "2px solid #1E88E5", padding: "20px" }}>
                     <h2 className="text-dark text-center">Bem-vindo de Volta!</h2>
                     <p className="text-muted text-center">Entre na sua conta para continuar.</p>
 
