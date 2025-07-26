@@ -58,7 +58,7 @@ Antes de começar, você precisa ter instalados:
 
 4. **Obs. : Certifique-se de que o backend está rodando antes de iniciar o frontend
 
-###Sobre os Desenvolvedores
+### Sobre os Desenvolvedores
 
 **Nome:** Antonio Mikael Vasconcelos Aguiar
 
